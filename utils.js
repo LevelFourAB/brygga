@@ -90,7 +90,7 @@ module.exports.destDir = function(type, base) {
 
     if(! localConfig) throw 'No configuration for ' + type + ', check your configuration';
 
-    var local = localConfig.dest || localConfig.root;
+    var local = typeof localConfig.dest !== 'undefined' ? localConfig.dest : localConfig.root;
     return path.join(config.shared.dest, local);
 };
 

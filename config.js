@@ -21,13 +21,38 @@ module.exports = {
 
     },
 
+    /**
+     * External data.
+     */
+    data: {
+        root: 'data',
+
+        src: [ '**/*.json' ]
+    },
+
+    /**
+     * CSS defaults. Use main.css as default and look in the css root folder.
+     */
     css: {
         root: 'css',
 
         src: [ 'main.css' ]
     },
 
+    /**
+     * HTML defaults, looks under the pages folder for files.
+     */
+    html: {
+        root: '',
+
+        src: [ 'pages/**/*.html' ],
+
+        watch: [ '**/*.html' ],
+
+        dest: ''
+    },
+
     watch: {
-        types: [ 'css' ]
+        types: [ 'css', 'html' ]
     }
 };
