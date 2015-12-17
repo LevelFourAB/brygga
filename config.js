@@ -5,54 +5,54 @@
  */
 
 module.exports = {
-    /**
-     * Shared items, such as the source and destination folders and the
-     * browsers that should be supported.
-     */
-    shared: {
-        src: 'src',
+	/**
+	 * Shared items, such as the source and destination folders and the
+	 * browsers that should be supported.
+	 */
+	shared: {
+		src: 'src',
 
-        dest: 'build',
+		dest: 'build',
 
-        browsers: [ 'last 2 versions' ]
-    },
+		browsers: [ 'last 2 versions' ]
+	},
 
-    build: {
+	build: {
 
-    },
+	},
 
-    /**
-     * External data.
-     */
-    data: {
-        root: 'data',
+	/**
+	 * External data.
+	 */
+	data: {
+		root: 'data',
 
-        src: [ '**/*.json' ]
-    },
+		src: [ '**/*.json' ]
+	},
 
-    /**
-     * CSS defaults. Use main.css as default and look in the css root folder.
-     */
-    css: {
-        root: 'css',
+	/**
+	 * CSS defaults. Use main.css as default and look in the css root folder.
+	 */
+	css: {
+		root: 'css',
 
-        src: [ 'main.css' ]
-    },
+		src: [ 'main.css' ]
+	},
 
-    /**
-     * HTML defaults, looks under the pages folder for files.
-     */
-    html: {
-        root: '',
+	/**
+	 * HTML defaults, looks under the pages folder for files.
+	 */
+	html: {
+		root: '',
 
-        src: [ 'pages/**/*.html' ],
+		src: [ 'pages/**/*.html' ],
 
-        watch: [ '**/*.html' ],
+		watch: [ '**/*.html' ],
 
-        dest: ''
-    },
+		dest: ''
+	},
 
-    watch: {
-        types: [ 'css', 'html' ]
-    }
+	watch: {
+		types: [ 'css', 'html' ]
+	}
 };
