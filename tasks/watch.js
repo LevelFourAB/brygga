@@ -11,8 +11,6 @@ module.exports = [
 
 utils.task('watch', function() {
 	config.watch.types.forEach(function(type) {
-		console.log(utils.watchGlob(type));
-
 		watch(utils.watchGlob(type), function() {
 			utils.gulp.start(config[type].watchTarget || type);
 		});
