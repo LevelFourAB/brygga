@@ -45,6 +45,21 @@ module.exports.noErrors = function(stream, title) {
 };
 
 /**
+ * Get the glob to use for finding files for the given type and sub key.
+ */
+module.exports.glob = function(type, key, base) {
+	var root = (base || config.shared.src);
+	var localConfig = config[type];
+
+	if(! localConfig) throw 'No configuration for ' + type + ', check your configuration';
+	if(! localConfig[key]) throw 'No files defined for ' + type + ' and value ' + key + ', check your configuration';
+
+	var srcDir = path.join(root, localConfig.root || '');
+
+	return this.mapFiles(localConfig[key], srcDir);
+};
+
+/**
  * Get the source directory for the given type by looking it up in the
  * configuration.
  */

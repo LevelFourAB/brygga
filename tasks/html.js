@@ -1,4 +1,5 @@
 var utils = require('../utils');
+var config = require('../config');
 var dataUtils = require('../data');
 
 var browsersync = require('browser-sync');
@@ -20,6 +21,7 @@ var loadData = function(file, cb) {
 };
 
 utils.task('html', function() {
+	nunjucks.nunjucks.configure(utils.glob('html', 'templates'), { watch: false });
 	return utils.srcFor('html')
 		.pipe(data(loadData))
 		.pipe(nunjucks())

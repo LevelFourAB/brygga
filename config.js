@@ -47,6 +47,8 @@ module.exports = {
 
 		src: [ 'pages/**/*.html' ],
 
+		templates: [ '' ],
+
 		watch: [ '**/*.html' ],
 
 		dest: ''
