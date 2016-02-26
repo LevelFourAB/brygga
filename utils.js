@@ -1,9 +1,13 @@
 var config = require('./config');
 
+var fs = require('fs');
 var path = require('path');
+var merge = require('merge');
 
 var plumber = require('gulp-plumber');
 var notify = require('gulp-notify');
+
+var browsersync = require('browser-sync');
 
 module.exports.gulp = null;
 
@@ -130,4 +134,56 @@ module.exports.watchGlob = function(type, base) {
 	var srcDir = path.join(root, localConfig.root || '');
 
 	return this.mapFiles(localConfig.watch || localConfig.src, srcDir);
+};
+
+/**
+ * Utility that can be used in pipes to reload the brower of the user.
+ */
+module.exports.reloadBrowser = function() {
+	return browsersync.reload({ stream: true });
+};
+
+/**
+ * Find and return all plugins to Brygga that can be found.
+ */
+module.exports.plugins = function() {
+	if(this._plugins) return this._plugins;
+
+	// Loop through any file and folder in node_modules of the current dir
+	this._plugins = fs.readdirSync('node_modules')
+		.map(function(m) {
+			var root = path.join(process.cwd(), 'node_modules', m);
+			var file = path.join(root, 'package.json');
+			if(! fs.existsSync(file)) return;
+
+			var pkg = require(file);
+			if(! pkg.keywords || pkg.keywords.indexOf('brygga-plugin') === -1) return;
+
+			var plugin = require(root);
+			plugin.name = m;
+
+			if(plugin.config) {
+				// Merge configurations
+				merge.recursive(config, plugin.config);
+
+				// Do updates of configs for watch and build
+				Object.keys(plugin.config).forEach(function(k) {
+					var subConfig = plugin.config[k];
+					if(subConfig.watch) {
+						config.watch.types.push(k);
+					}
+
+					if(subConfig.buildStep) {
+						config.build[subConfig.buildStep].push(k);
+					}
+				});
+			}
+
+			return plugin;
+		})
+		.filter(function(m) {
+			return !! m;
+		});
+
+	return this._plugins;
 };

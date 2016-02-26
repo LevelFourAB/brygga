@@ -18,7 +18,13 @@ module.exports = {
 	},
 
 	build: {
+		steps: [ 'prepare', 'assets', 'cssjs', 'pages' ],
 
+		assets: [],
+
+		cssjs: [ 'css' ],
+
+		pages: []
 	},
 
 	/**
@@ -36,25 +42,12 @@ module.exports = {
 	css: {
 		root: 'css',
 
-		src: [ 'main.css' ]
-	},
+		src: [ 'main.css' ],
 
-	/**
-	 * HTML defaults, looks under the pages folder for files.
-	 */
-	html: {
-		root: '',
-
-		src: [ 'pages/**/*.html' ],
-
-		templates: [ '' ],
-
-		watch: [ '**/*.html' ],
-
-		dest: ''
+		watch: [ '**/*.css' ]
 	},
 
 	watch: {
-		types: [ 'css', 'html' ]
+		types: [ 'css' ]
 	}
 };

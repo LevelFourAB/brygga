@@ -59,53 +59,11 @@ brygga.config.css.src = [ 'main.css' ];
 
 # HTML
 
-HTML support is included to allow users of Brygga to build static sites or styleguides. Brygga uses [Nunjucks](https://mozilla.github.io/nunjucks/) for templating and looks for pages under the folder `src/pages`.
-
-Task: `html`
-Config:
-```js
-// HTML is stored in the root
-brygga.config.html.root = '';
-// Config to look for HTML in the pages folder
-brygga.config.html.src = [ 'pages/**/*.html' ];
-// Use the entire source folder to include or import templates
-brygga.config.html.templates = [ '' ];
-```
-
-### Data
-
-Templates support fetching data via JSON files and via front matter. Front matter is useful to set things such as titles and other variables used by templates. Example:
-
-`pages/index.html`:
-```
----
-title: Test
----
-{% extends 'layouts/base.html' %}
-
-{% block content %}
-<h1>{{ test }}</h1>
-{% endblock %}
-```
-
-`layouts/base.html`:
-```
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ title }}</title>
-    <link rel="stylesheet" href="/css/main.css">
-</head>
-<body>
-    {% block content %}
-    {% endblock %}
-</body>
-</html>
-```
+HTML support can be activated via a [brygga-nunjucks](https://github.com/LevelFourAB/brygga-nunjucks).
 
 ## Data
 
-Brygga will load JSON files in the data folder when rendering templates. The name of the JSON file is mapped on the data object, so a file named `site.json` will have its data available as `site`.
+Brygga will load JSON files in the data folder and make it available to plguins. The name of the JSON file is mapped on the data object, so a file named `site.json` will have its data available as `site`.
 
 Config:
 ```js

@@ -1,15 +1,21 @@
 var config = require('./config');
 var utils = require('./utils');
+var data = require('./data');
 
 var gutil = require('gulp-util');
 
 
 module.exports.config = config;
 module.exports.utils = utils;
+module.exports.data = data;
 
 utils.gulp = require('gulp');
 
+// Load our own tasks
 var tasks = require('require-dir')('./tasks');
+
+// Activate our plugins
+var plugins = utils.plugins();
 
 function pad(value, width) {
 	if(value.length > width) return value.length + ' ';
@@ -20,11 +26,22 @@ function pad(value, width) {
 // Define a task for outputting some help info
 utils.gulp.task('default', function() {
 	var taskList = [];
+
+	// Map the internal tasks
 	Object.keys(tasks).forEach(function(key) {
 		var task = tasks[key];
 		task.forEach(function(t) {
 			taskList.push(t);
 		});
+	});
+
+	// Map tasks of plugins
+	plugins.forEach(function(plugin) {
+		if(plugin.tasks) {
+			plugin.tasks.forEach(function(t) {
+				taskList.push(t);
+			});
+		}
 	});
 
 	taskList.sort(function(a, b) {
