@@ -63,7 +63,7 @@ HTML support can be activated via a [brygga-nunjucks](https://github.com/LevelFo
 
 ## Data
 
-Brygga will load JSON files in the data folder and make it available to plguins. The name of the JSON file is mapped on the data object, so a file named `site.json` will have its data available as `site`.
+Brygga will load JSON files in the data folder and make it available to plugins. The name of the JSON file is mapped on the data object, so a file named `site.json` will have its data available as `site`.
 
 Config:
 ```js
