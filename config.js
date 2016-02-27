@@ -49,5 +49,9 @@ module.exports = {
 
 	watch: {
 		types: [ 'css' ]
+	},
+
+	serve: {
+		routes: {}
 	}
 };

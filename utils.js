@@ -52,7 +52,7 @@ module.exports.noErrors = function(stream, title) {
  * Get the glob to use for finding files for the given type and sub key.
  */
 module.exports.glob = function(type, key, base) {
-	var root = (base || config.shared.src);
+	var root = typeof base === 'undefined' ? config.shared.src : base;
 	var localConfig = config[type];
 
 	if(! localConfig) throw 'No configuration for ' + type + ', check your configuration';
@@ -68,7 +68,7 @@ module.exports.glob = function(type, key, base) {
  * configuration.
  */
 module.exports.srcDir = function(type, base) {
-	var root = (base || config.shared.src);
+	var root = typeof base === 'undefined' ? config.shared.src : base;
 	var localConfig = config[type];
 
 	if(! localConfig) throw 'No configuration for ' + type + ', check your configuration';
@@ -80,7 +80,7 @@ module.exports.srcDir = function(type, base) {
  * Get the glob to use for finding the source files for the given type.
  */
 module.exports.srcGlob = function(type, base) {
-	var root = (base || config.shared.src);
+	var root = typeof base === 'undefined' ? config.shared.src : base;
 	var localConfig = config[type];
 
 	if(! localConfig) throw 'No configuration for ' + type + ', check your configuration';
@@ -104,13 +104,21 @@ module.exports.srcFor = function(type, opts, base) {
  * Get the destination directory for the given type.
  */
 module.exports.destDir = function(type, base) {
-	var root = (base || config.shared.src);
+	var root = typeof base === 'undefined' ? config.shared.dest : base;
 	var localConfig = config[type];
 
 	if(! localConfig) throw 'No configuration for ' + type + ', check your configuration';
 
 	var local = typeof localConfig.dest !== 'undefined' ? localConfig.dest : localConfig.root;
-	return path.join(config.shared.dest, local);
+	return path.join(root, local);
+};
+
+/**
+ * Get the path to a destination file for the given type.
+ */
+module.exports.destFile = function(type, file, base) {
+	var dir = this.destDir(type, base);
+	return path.join(dir, file);
 };
 
 /**
@@ -125,11 +133,11 @@ module.exports.destFor = function(type, base) {
  * Get the glob to use for files that should be watched for the given type.
  */
 module.exports.watchGlob = function(type, base) {
-	var root = (base || config.shared.src);
+	var root = typeof base === 'undefined' ? config.shared.src : base;
 	var localConfig = config[type];
 
 	if(! localConfig) throw 'No configuration for ' + type + ', check your configuration';
-	if(! localConfig.src) throw 'No source files defined for ' + type + ', check your configuration';
+	if(! localConfig.watch && ! localConfig.src) throw 'No source files defined for ' + type + ', check your configuration';
 
 	var srcDir = path.join(root, localConfig.root || '');
 
@@ -139,8 +147,12 @@ module.exports.watchGlob = function(type, base) {
 /**
  * Utility that can be used in pipes to reload the brower of the user.
  */
-module.exports.reloadBrowser = function() {
-	return browsersync.reload({ stream: true });
+module.exports.reloadBrowser = function(file) {
+	if(file) {
+		browsersync.reload(file);
+	} else {
+		return browsersync.reload({ stream: true });
+	}
 };
 
 /**
