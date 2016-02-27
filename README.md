@@ -25,8 +25,6 @@ src/ - the source files
     main.css - the default CSS file
   data/ - data made available to HTML templates
     site.json - shared data available under data object key site
-  pages/ - HTML pages
-    index.html
 ```
 
 A lot of things in Brygga can be configured via the `brygga` object. You can change the build folder and source folder using these config properties:
@@ -57,9 +55,13 @@ brygga.config.css.root = 'css';
 brygga.config.css.src = [ 'main.css' ];
 ```
 
+# JavaScript
+
+JavaScript is supported via [JSPM](http://jspm.io/) and can be activated via [brygga-jspm](https://github.com/LevelFourAB/brygga-jspm).
+
 # HTML
 
-HTML support can be activated via a [brygga-nunjucks](https://github.com/LevelFourAB/brygga-nunjucks).
+HTML support can be activated via [brygga-nunjucks](https://github.com/LevelFourAB/brygga-nunjucks).
 
 ## Data
 
