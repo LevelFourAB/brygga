@@ -1,6 +1,6 @@
 {
   "name": "brygga",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Opinionated Gulp tasks for HTML/CSS/JS",
   "author": "Andreas Holstenson <a@holstenson.se>",
   "license": "MIT",
