@@ -11,8 +11,6 @@ module.exports = [
 ];
 
 function makeRoute(path, handler) {
-	console.log(typeof handler);
-
 	if(typeof handler === 'string') {
 		handler = servestatic(handler);
 	}
@@ -21,7 +19,10 @@ function makeRoute(path, handler) {
 		if(req.originalUrl.indexOf(path) === 0) {
 			req.url = req.originalUrl.substring(path.length);
 			if(req.url.length === 0) req.url = '/';
-			handler(req, res, next);
+			handler(req, res, function() {
+				req.url = req.originalUrl;
+				next();
+			});
 			return true;
 		}
 
