@@ -52,6 +52,7 @@ module.exports = {
 	},
 
 	serve: {
-		routes: {}
+		routes: {},
+		alias: {}
 	}
 };
